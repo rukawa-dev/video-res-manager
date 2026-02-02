@@ -57,7 +57,41 @@
         </div>
         <input type="text" id="result-url-input" placeholder="생성된 GEM 결과 URL을 입력하세요..." class="result-input">
       </div>
-      <div class="glass-container" style="padding: 2rem; margin-top: 2rem; opacity: 0.5;">
+      <div class="script-input-section">
+        <div class="gems-header">
+          <div class="result-icon" style="padding: 0.8rem; background: rgba(59, 130, 246, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <div class="gems-title-group">
+            <h2>대본 입력</h2>
+            <p>영상 대본이나 원문 내용을 입력해 주세요.</p>
+          </div>
+        </div>
+        <textarea id="script-content-input" class="script-textarea" placeholder="여기에 원문을 입력하세요..."></textarea>
+        <div class="button-row">
+          <button class="btn-gradient">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+              <path
+                d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z">
+              </path>
+              <path d="m5 3 1 1"></path>
+              <path d="m19 17 1 1"></path>
+              <path d="M19 3l1 1"></path>
+              <path d="m5 17 1 1"></path>
+            </svg>
+            원문 분석 및 추출
+          </button>
+        </div>
+      </div>
+      <div class="glass-container" style="padding: 2rem; margin-top: 2rem; opacity: 0.3;">
         <p id="detail-id"></p>
         <p>기타 세부 설정 및 작업 내용이 여기에 표시됩니다.</p>
       </div>
@@ -69,22 +103,25 @@
       const id = params.get('id');
       const detailId = document.getElementById('detail-id');
       const urlInput = document.getElementById('result-url-input');
+      const scriptInput = document.getElementById('script-content-input');
 
       if (id) {
         if (detailId) detailId.textContent = `항목 ID: ${id}`;
 
-        // Load saved URL from localStorage
-        const storageKey = `gem_result_url_${id}`;
-        const savedUrl = localStorage.getItem(storageKey);
-        if (savedUrl && urlInput) {
-          urlInput.value = savedUrl;
-        }
+        // Persistence Keys
+        const urlKey = `gem_result_url_${id}`;
+        const scriptKey = `gem_script_content_${id}`;
 
-        // Save URL on input
+        // Load Initial Data
+        if (urlInput) urlInput.value = localStorage.getItem(urlKey) || '';
+        if (scriptInput) scriptInput.value = localStorage.getItem(scriptKey) || '';
+
+        // Save on Input
         if (urlInput) {
-          urlInput.addEventListener('input', (e) => {
-            localStorage.setItem(storageKey, e.target.value);
-          });
+          urlInput.addEventListener('input', (e) => localStorage.setItem(urlKey, e.target.value));
+        }
+        if (scriptInput) {
+          scriptInput.addEventListener('input', (e) => localStorage.setItem(scriptKey, e.target.value));
         }
       }
     });
