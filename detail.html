@@ -165,6 +165,24 @@
     </div>
   </div>
   <script type="module">
+    const modal = document.getElementById('custom-modal');
+    const modalMessage = document.getElementById('modal-message');
+    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+
+    window.showModal = (message, onConfirm) => {
+      if (!modal || !modalMessage || !modalConfirmBtn) return;
+      modalMessage.textContent = message;
+      modal.classList.add('active');
+
+      const handleConfirm = () => {
+        modal.classList.remove('active');
+        modalConfirmBtn.removeEventListener('click', handleConfirm);
+        if (onConfirm) onConfirm();
+      };
+
+      modalConfirmBtn.onclick = handleConfirm; // Use onclick for simplicity and to avoid multiple listeners
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
@@ -264,9 +282,7 @@
         successMessage += `✅ 나레이션(이름 포함/미포함)이 추출되었습니다.`;
       }
 
-      if (successMessage) {
-        showModal(successMessage);
-      } else {
+      if (!successMessage) {
         showModal('추출할 수 있는 제목이나 나레이션 정보를 찾지 못했습니다.');
       }
     };
@@ -276,7 +292,6 @@
       if (el) {
         el.select();
         document.execCommand('copy');
-        showModal('복사되었습니다.');
       }
     };
 
@@ -295,9 +310,7 @@
       document.execCommand('copy');
       document.body.removeChild(tempArea);
 
-      showModal('나레이션이 복사되었습니다. 타입캐스트로 이동합니다.', () => {
-        window.open('https://typecast.ai/', '_blank');
-      });
+      window.open('https://typecast.ai/', '_blank');
     };
   </script>
 </body>
