@@ -58,17 +58,17 @@ const DetailPage = ({ showModal }) => {
           <RecommendationSection narrationText={details.narrationWithNames} />
 
           <CommonOptionsSection
-            value={details.commonPromptOptions}
+            value={details}
             onChange={saveDetail}
           />
 
           <MainImageSection
-            value={details.mainImagePrompt}
+            details={details}
             onChange={saveDetail}
           />
 
           {/* 빈 섹션 추가 */}
-          <section className="script-input-section" style={{ minHeight: '100px', borderStyle: 'dashed', opacity: 0.5 }}>
+          <section className="script-input-section" style={{ minHeight: '50dvh', borderStyle: 'dashed', opacity: 0.5 }}>
             <div className="gems-header">
               <div className="gems-title-group">
                 <h2 style={{ color: 'var(--text-secondary)' }}>새 섹션이 준비 중입니다...</h2>

@@ -49,17 +49,17 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-html,
+html {
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: var(--bg-color);
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  height: 100%;
-  /* 추가 */
-}
-
-body {
   color: var(--text-primary);
   display: flex;
   justify-content: center;
@@ -67,7 +67,6 @@ body {
   overflow-y: auto;
   font-size: 16px;
   width: 100%;
-  /* 추가 */
 }
 
 #root {
@@ -163,8 +162,6 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding-bottom: 50dvh;
-  /* 메인 태그로 하단 패딩 이동 */
 }
 
 .item-info {
@@ -508,6 +505,143 @@ h1 {
 .btn-outline:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: var(--text-secondary);
+}
+
+/* Common Options List UI */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.option-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.option-input:focus {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+}
+
+.option-delete-btn {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  padding: 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.option-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  transform: scale(1.05);
+}
+
+.option-add-btn {
+  width: 100%;
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px dashed rgba(16, 185, 129, 0.3);
+  color: #10b981;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.option-add-btn:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+  transform: translateY(-2px);
+}
+
+/* Ratio Selection UI */
+.ratio-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0;
+}
+
+.ratio-item {
+  flex: 1;
+}
+
+.ratio-item input {
+  display: none;
+}
+
+.ratio-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ratio-item input:checked+.ratio-label {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid #10b981;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.ratio-label:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Readonly Input Styling */
+.readonly-input-container {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.readonly-display-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-family: 'D2Coding', monospace;
+  cursor: default;
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .narration-grid {

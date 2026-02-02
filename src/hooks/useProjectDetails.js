@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import gemsOptions from '../../⭐️ 옵션.json';
 
 export const useProjectDetails = (id, showModal, updateGlobalTask) => {
   const [task, setTask] = useState(null);
@@ -8,7 +9,8 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     narrationWithNames: '',
     narrationNoNames: '',
     mainImagePrompt: '',
-    commonPromptOptions: ''
+    commonPromptOptions: [],
+    imageRatio: '16:9'
   });
 
   useEffect(() => {
@@ -26,15 +28,25 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
       narrationWithNames: localStorage.getItem(`narration_with_names_${id}`) || '',
       narrationNoNames: localStorage.getItem(`narration_no_names_${id}`) || '',
       mainImagePrompt: localStorage.getItem(`main_image_prompt_${id}`) || '',
-      commonPromptOptions: localStorage.getItem(`common_prompt_options_${id}`) || ''
+      commonPromptOptions: (() => {
+        const saved = localStorage.getItem(`common_prompt_options_${id}`);
+        if (saved) {
+          try {
+            return JSON.parse(saved);
+          } catch (e) {
+            return [saved]; // 호환성을 위해 문자열인 경우 배열로 감쌈
+          }
+        }
+        return gemsOptions["공통 프롬프트 기본값"] || [];
+      })(),
+      imageRatio: localStorage.getItem(`image_ratio_${id}`) || '16:9'
     });
   }, [id]);
 
   const saveDetail = useCallback((key, value) => {
     setDetails(prev => ({ ...prev, [key]: value }));
-    localStorage.setItem(`${key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)}_${id}`, value);
-    // Adjust key naming to match existing localStorage convention if needed
-    // The previous used: gem_result_url, gem_script_content, narration_with_names, narration_no_names
+
+    // Unify key naming for localStorage
     let storageKey = '';
     if (key === 'gemResultUrl') storageKey = 'gem_result_url';
     else if (key === 'scriptContent') storageKey = 'gem_script_content';
@@ -42,9 +54,11 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     else if (key === 'narrationNoNames') storageKey = 'narration_no_names';
     else if (key === 'mainImagePrompt') storageKey = 'main_image_prompt';
     else if (key === 'commonPromptOptions') storageKey = 'common_prompt_options';
+    else if (key === 'imageRatio') storageKey = 'image_ratio';
 
     if (storageKey) {
-      localStorage.setItem(`${storageKey}_${id}`, value);
+      const storageValue = Array.isArray(value) ? JSON.stringify(value) : value;
+      localStorage.setItem(`${storageKey}_${id}`, storageValue);
     }
   }, [id]);
 
