@@ -12,7 +12,8 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     commonPromptOptions: [],
     imageRatio: '16:9',
     sceneImagePrompt: '',
-    scenePrefixOptions: []
+    scenePrefixOptions: [],
+    analysisResult: ''
   });
 
   useEffect(() => {
@@ -53,7 +54,8 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
           }
         }
         return gemsOptions["장면별 이미지 프롬프트 기본값"] || [];
-      })()
+      })(),
+      analysisResult: localStorage.getItem(`analysis_result_${id}`) || ''
     });
   }, [id]);
 
@@ -71,6 +73,7 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     else if (key === 'imageRatio') storageKey = 'image_ratio';
     else if (key === 'sceneImagePrompt') storageKey = 'scene_image_prompt';
     else if (key === 'scenePrefixOptions') storageKey = 'scene_prefix_options';
+    else if (key === 'analysisResult') storageKey = 'analysis_result';
 
     if (storageKey) {
       const storageValue = Array.isArray(value) ? JSON.stringify(value) : value;
@@ -106,6 +109,40 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
       saveDetail('narrationNoNames', noNames);
     } else {
       showModal('추출할 수 있는 나레이션 정보를 찾지 못했습니다.');
+    }
+
+    // 3. Extract Analysis Result (Title, Keywords, Desc, Comments) for Upload Ready
+    let analysis = {
+      titles: [],
+      keywords: '',
+      description: '',
+      comments: []
+    };
+
+    const titleBlockMatch = details.scriptContent.match(/{{추천 제목}}([\s\S]+?)(?=\n{{|$)/);
+    if (titleBlockMatch) {
+      const lines = titleBlockMatch[1].trim().split(/\d+\.\s+/).filter(Boolean);
+      analysis.titles = lines.map(line => line.trim());
+    }
+
+    const keywordBlockMatch = details.scriptContent.match(/{{추천 키워드}}([\s\S]+?)(?=\n{{|$)/);
+    if (keywordBlockMatch) {
+      analysis.keywords = keywordBlockMatch[1].trim();
+    }
+
+    const descBlockMatch = details.scriptContent.match(/{{설명글}}([\s\S]+?)(?=\n{{|$)/);
+    if (descBlockMatch) {
+      analysis.description = descBlockMatch[1].trim();
+    }
+
+    const commentBlockMatch = details.scriptContent.match(/{{추천 댓글}}([\s\S]+?)(?=\n{{|$)/);
+    if (commentBlockMatch) {
+      const lines = commentBlockMatch[1].trim().split(/\d+\.\s+/).filter(Boolean);
+      analysis.comments = lines.map(line => line.trim());
+    }
+
+    if (analysis.titles.length > 0 || analysis.keywords || analysis.description || analysis.comments.length > 0) {
+      saveDetail('analysisResult', JSON.stringify(analysis));
     }
   };
 

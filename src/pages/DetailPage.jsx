@@ -10,6 +10,7 @@ import RecommendationSection from '../components/RecommendationSection';
 import MainImageSection from '../components/MainImageSection';
 import CommonOptionsSection from '../components/CommonOptionsSection';
 import SceneImageSection from '../components/SceneImageSection';
+import UploadReadySection from '../components/UploadReadySection';
 
 const DetailPage = ({ showModal }) => {
   const { id } = useParams();
@@ -73,14 +74,21 @@ const DetailPage = ({ showModal }) => {
             onChange={saveDetail}
           />
 
-          {/* 빈 섹션 복구 */}
-          <section className="script-input-section" style={{ minHeight: '50dvh', borderStyle: 'dashed', opacity: 0.5 }}>
-            <div className="gems-header">
-              <div className="gems-title-group">
-                <h2 style={{ color: 'var(--text-secondary)' }}>새 섹션이 준비 중입니다...</h2>
-              </div>
-            </div>
-          </section>
+          <UploadReadySection content={details.analysisResult} />
+
+          {/* 하단 브랜드 이미지 */}
+          <div style={{ width: '100%' }}>
+            <img
+              src="/soft-land-art.jpg"
+              alt="Soft Land Art"
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+                opacity: 0.8
+              }}
+            />
+          </div>
         </main>
       </div>
     </div>
