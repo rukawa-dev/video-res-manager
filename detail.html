@@ -91,23 +91,16 @@
           </button>
         </div>
       </div>
-      <div class="glass-container" style="padding: 2rem; margin-top: 2rem; opacity: 0.3;">
-        <p id="detail-id"></p>
-        <p>기타 세부 설정 및 작업 내용이 여기에 표시됩니다.</p>
-      </div>
     </div>
   </div>
   <script type="module">
     document.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
-      const detailId = document.getElementById('detail-id');
       const urlInput = document.getElementById('result-url-input');
       const scriptInput = document.getElementById('script-content-input');
 
       if (id) {
-        if (detailId) detailId.textContent = `항목 ID: ${id}`;
-
         // Persistence Keys
         const urlKey = `gem_result_url_${id}`;
         const scriptKey = `gem_script_content_${id}`;
