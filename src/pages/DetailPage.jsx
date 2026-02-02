@@ -9,6 +9,7 @@ import NarrationSection from '../components/NarrationSection';
 import RecommendationSection from '../components/RecommendationSection';
 import MainImageSection from '../components/MainImageSection';
 import CommonOptionsSection from '../components/CommonOptionsSection';
+import SceneImageSection from '../components/SceneImageSection';
 
 const DetailPage = ({ showModal }) => {
   const { id } = useParams();
@@ -67,7 +68,12 @@ const DetailPage = ({ showModal }) => {
             onChange={saveDetail}
           />
 
-          {/* 빈 섹션 추가 */}
+          <SceneImageSection
+            details={details}
+            onChange={saveDetail}
+          />
+
+          {/* 빈 섹션 복구 */}
           <section className="script-input-section" style={{ minHeight: '50dvh', borderStyle: 'dashed', opacity: 0.5 }}>
             <div className="gems-header">
               <div className="gems-title-group">

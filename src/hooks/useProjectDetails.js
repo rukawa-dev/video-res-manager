@@ -10,7 +10,9 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     narrationNoNames: '',
     mainImagePrompt: '',
     commonPromptOptions: [],
-    imageRatio: '16:9'
+    imageRatio: '16:9',
+    sceneImagePrompt: '',
+    scenePrefixOptions: []
   });
 
   useEffect(() => {
@@ -39,7 +41,19 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
         }
         return gemsOptions["공통 프롬프트 기본값"] || [];
       })(),
-      imageRatio: localStorage.getItem(`image_ratio_${id}`) || '16:9'
+      imageRatio: localStorage.getItem(`image_ratio_${id}`) || '16:9',
+      sceneImagePrompt: localStorage.getItem(`scene_image_prompt_${id}`) || '',
+      scenePrefixOptions: (() => {
+        const saved = localStorage.getItem(`scene_prefix_options_${id}`);
+        if (saved) {
+          try {
+            return JSON.parse(saved);
+          } catch (e) {
+            return [saved];
+          }
+        }
+        return gemsOptions["장면별 이미지 프롬프트 기본값"] || [];
+      })()
     });
   }, [id]);
 
@@ -55,6 +69,8 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     else if (key === 'mainImagePrompt') storageKey = 'main_image_prompt';
     else if (key === 'commonPromptOptions') storageKey = 'common_prompt_options';
     else if (key === 'imageRatio') storageKey = 'image_ratio';
+    else if (key === 'sceneImagePrompt') storageKey = 'scene_image_prompt';
+    else if (key === 'scenePrefixOptions') storageKey = 'scene_prefix_options';
 
     if (storageKey) {
       const storageValue = Array.isArray(value) ? JSON.stringify(value) : value;

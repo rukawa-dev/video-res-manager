@@ -47,7 +47,7 @@ const MainImageSection = ({ details, onChange }) => {
       </div>
       <textarea
         className="script-textarea"
-        style={{ minHeight: '120px' }}
+        style={{ minHeight: '300px' }}
         placeholder="대표 이미지에 사용할 프롬프트를 입력하세요."
         value={mainImagePrompt}
         onChange={(e) => onChange('mainImagePrompt', e.target.value)}
