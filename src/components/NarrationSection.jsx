@@ -24,7 +24,7 @@ const NarrationSection = ({ withNames, noNames, onChange, showModal }) => {
       <div className="narration-header">
         <div className="gems-icon"><Volume2 size={24} color="#a855f7" /></div>
         <div className="gems-title-group">
-          <h2>Narration Content</h2>
+          <h2>나레이션 <span style={{ marginLeft: '10px', fontSize: '18px', color: '#ff4d4d', fontWeight: 'bold' }}>총 {withNames ? withNames.split('\n').filter(line => line.trim() !== '').length : 0}개</span></h2>
         </div>
         <div className="header-buttons">
           <button className="btn-pink" onClick={goToTypecast}>

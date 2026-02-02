@@ -5,7 +5,7 @@ const ResultInputSection = ({ value, onChange }) => {
     <section className="result-input-section">
       <div className="result-label-group">
         <div className="result-icon"><LinkIcon size={18} color="#a0a0a0" /></div>
-        <span className="result-label">생성된 GEM 결과</span>
+        <span className="result-label">대본 GEM 결과</span>
       </div>
       <input
         type="text"

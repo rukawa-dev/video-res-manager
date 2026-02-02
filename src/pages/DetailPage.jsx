@@ -6,8 +6,9 @@ import GemsSection from '../components/GemsSection';
 import ResultInputSection from '../components/ResultInputSection';
 import ScriptInputSection from '../components/ScriptInputSection';
 import NarrationSection from '../components/NarrationSection';
-import RecommendationSection from '../components/RecommendationSection';
+import ThumbnailPromptSection from '../components/ThumbnailPromptSection';
 import MainImageSection from '../components/MainImageSection';
+import OtherImageSection from '../components/OtherImageSection';
 import CommonOptionsSection from '../components/CommonOptionsSection';
 import SceneImageSection from '../components/SceneImageSection';
 import UploadReadySection from '../components/UploadReadySection';
@@ -57,7 +58,12 @@ const DetailPage = ({ showModal }) => {
             showModal={showModal}
           />
 
-          <RecommendationSection narrationText={details.narrationWithNames} />
+          <ThumbnailPromptSection
+            value={details.thumbnailPrompt}
+            urlValue={details.thumbnailGemUrl}
+            onChange={saveDetail}
+            narrationText={details.narrationWithNames}
+          />
 
           <CommonOptionsSection
             value={details}
@@ -74,12 +80,21 @@ const DetailPage = ({ showModal }) => {
             onChange={saveDetail}
           />
 
-          <UploadReadySection content={details.analysisResult} />
+          <OtherImageSection
+            details={details}
+            onChange={saveDetail}
+          />
+
+          <UploadReadySection
+            content={details.analysisResult}
+            additionalDescription={details.additionalDescription}
+            onAdditionalDescriptionChange={saveDetail}
+          />
 
           {/* 하단 브랜드 이미지 */}
           <div style={{ width: '100%' }}>
             <img
-              src="/soft-land-art.jpg"
+              src={`${import.meta.env.BASE_URL}soft-land-art.jpg`}
               alt="Soft Land Art"
               style={{
                 width: '100%',

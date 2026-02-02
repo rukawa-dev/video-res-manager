@@ -13,7 +13,10 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     imageRatio: '16:9',
     sceneImagePrompt: '',
     scenePrefixOptions: [],
-    analysisResult: ''
+    analysisResult: '',
+    thumbnailGemUrl: '',
+    otherImagePrompt: '',
+    additionalDescription: ''
   });
 
   useEffect(() => {
@@ -55,7 +58,16 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
         }
         return gemsOptions["장면별 이미지 프롬프트 기본값"] || [];
       })(),
-      analysisResult: localStorage.getItem(`analysis_result_${id}`) || ''
+      analysisResult: localStorage.getItem(`analysis_result_${id}`) || '',
+      thumbnailPrompt: localStorage.getItem(`thumbnail_prompt_${id}`) || '',
+      thumbnailGemUrl: localStorage.getItem(`thumbnail_gem_url_${id}`) || '',
+      otherImagePrompt: (() => {
+        const stored = localStorage.getItem(`other_image_prompt_${id}`);
+        if (stored) return stored;
+        const defaultVal = gemsOptions["기타 이미지 프롬프트 기본값"];
+        return Array.isArray(defaultVal) ? defaultVal.join('\n') : (defaultVal || '');
+      })(),
+      additionalDescription: localStorage.getItem(`additional_description_${id}`) || ''
     });
   }, [id]);
 
@@ -74,6 +86,10 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     else if (key === 'sceneImagePrompt') storageKey = 'scene_image_prompt';
     else if (key === 'scenePrefixOptions') storageKey = 'scene_prefix_options';
     else if (key === 'analysisResult') storageKey = 'analysis_result';
+    else if (key === 'thumbnailPrompt') storageKey = 'thumbnail_prompt';
+    else if (key === 'thumbnailGemUrl') storageKey = 'thumbnail_gem_url';
+    else if (key === 'otherImagePrompt') storageKey = 'other_image_prompt';
+    else if (key === 'additionalDescription') storageKey = 'additional_description';
 
     if (storageKey) {
       const storageValue = Array.isArray(value) ? JSON.stringify(value) : value;

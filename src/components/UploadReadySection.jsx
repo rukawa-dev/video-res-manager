@@ -68,7 +68,7 @@ const CopyableItem = ({ label, text, index }) => {
   );
 };
 
-const UploadReadySection = ({ content }) => {
+const UploadReadySection = ({ content, additionalDescription, onAdditionalDescriptionChange }) => {
   const data = useMemo(() => {
     if (!content) return null;
     try {
@@ -139,6 +139,20 @@ const UploadReadySection = ({ content }) => {
                 <div style={{ width: '4px', height: '18px', background: '#f59e0b', borderRadius: '2px' }}></div>
                 <h3 style={{ color: '#f59e0b', fontSize: '1.1rem', fontWeight: '700', margin: 0 }}>설명글</h3>
               </div>
+
+              <textarea
+                className="narration-textarea"
+                style={{
+                  minHeight: '80px',
+                  marginBottom: '1rem',
+                  fontSize: '1rem',
+                  borderColor: 'rgba(245, 158, 11, 0.2)'
+                }}
+                placeholder="추가 설명글을 입력하세요 (타임라인 등)..."
+                value={additionalDescription}
+                onChange={(e) => onAdditionalDescriptionChange('additionalDescription', e.target.value)}
+              />
+
               <CopyableItem text={data.description} />
             </div>
           )}
