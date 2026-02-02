@@ -79,7 +79,7 @@
         </div>
         <textarea id="script-content-input" class="script-textarea" placeholder="여기에 원문을 입력하세요..."></textarea>
         <div class="button-row">
-          <button class="btn-gradient">
+          <button class="btn-gradient" onclick="analyzeScript()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
               <path
@@ -110,15 +110,7 @@
             <p>대본 구성에 맞춰 추출된 나레이션 데이터를 관리하세요.</p>
           </div>
           <div class="header-buttons">
-            <button class="btn-outline" onclick="copyAllNarration()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-              복사하기
-            </button>
-            <button class="btn-pink">
+            <button class="btn-pink" onclick="goToTypecast()">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
                 <path d="M11 5L6 9H2V15H6L11 19V5Z"></path>
@@ -134,11 +126,12 @@
             <div class="col-header">
               <div class="col-label"><span class="label-dot" style="background: #a855f7;"></span>이름 있는 버전</div>
               <button class="icon-btn" onclick="copyText('narration-with-names')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
+                복사하기
               </button>
             </div>
             <textarea id="narration-with-names" class="narration-textarea" placeholder="이름 태그가 포함된 나레이션..."></textarea>
@@ -147,16 +140,27 @@
             <div class="col-header">
               <div class="col-label"><span class="label-dot" style="background: #2dd4bf;"></span>이름 없는 버전</div>
               <button class="icon-btn" onclick="copyText('narration-no-names')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
+                복사하기
               </button>
             </div>
             <textarea id="narration-no-names" class="narration-textarea" placeholder="이름 태그가 제거된 나레이션..."></textarea>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Modal Area -->
+  <div id="custom-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-message" id="modal-message">알림 내용이 여기에 표시됩니다.</div>
+      <div class="modal-footer">
+        <button class="btn-modal-confirm" id="modal-confirm-btn">확인</button>
       </div>
     </div>
   </div>
@@ -212,31 +216,58 @@
       const id = params.get('id');
 
       if (!scriptContent || !id) {
-        alert('대본 내용이 없거나 ID를 찾을 수 없습니다.');
+        showModal('대본 내용이 없거나 ID를 찾을 수 없습니다.');
         return;
       }
 
-      // Extract title: find 1. xxx under {{추천 제목}}
-      const titleMatch = scriptContent.match(/{{추천 제목}}\n1\.\s*(.+)/);
+      let successMessage = "";
+
+      // 1. Extract title: find 1. xxx under {{추천 제목}}
+      const titleRegex = /{{추천 제목}}[\s\n]+1\.\s*(.+)/;
+      const titleMatch = scriptContent.match(titleRegex);
+
       if (titleMatch && titleMatch[1]) {
         const newTitle = titleMatch[1].trim();
-
-        // Update localStorage vrm_tasks
         let tasks = JSON.parse(localStorage.getItem('vrm_tasks') || '[]');
         const index = tasks.findIndex(item => item.id === parseInt(id));
 
         if (index !== -1) {
           tasks[index].title = newTitle;
           localStorage.setItem('vrm_tasks', JSON.stringify(tasks));
-
-          // Update UI
           document.getElementById('current-post-title').textContent = newTitle;
-          alert(`새로운 제목으로 업데이트되었습니다: ${newTitle}`);
-        } else {
-          alert('해당 ID의 항목을 찾을 수 없습니다.');
+          successMessage += `✅ 제목이 업데이트되었습니다: ${newTitle}\n`;
         }
+      }
+
+      // 2. Extract narration: find content under {{나레이션}}
+      const narrationRegex = /{{나레이션}}\n([\s\S]+?)(?=\n{{|$)/;
+      const narrationMatch = scriptContent.match(narrationRegex);
+
+      if (narrationMatch && narrationMatch[1]) {
+        const extractedNarration = narrationMatch[1].trim();
+
+        // Populate With-Speaker Version
+        const narrationWithNamesArea = document.getElementById('narration-with-names');
+        if (narrationWithNamesArea) {
+          narrationWithNamesArea.value = extractedNarration;
+          localStorage.setItem(`narration_with_names_${id}`, extractedNarration);
+        }
+
+        // Generate and Populate No-Speaker Version
+        const extractedNarrationNoNames = extractedNarration.replace(/\[[^\]]+\]\s*/g, '');
+        const narrationNoNamesArea = document.getElementById('narration-no-names');
+        if (narrationNoNamesArea) {
+          narrationNoNamesArea.value = extractedNarrationNoNames;
+          localStorage.setItem(`narration_no_names_${id}`, extractedNarrationNoNames);
+        }
+
+        successMessage += `✅ 나레이션(이름 포함/미포함)이 추출되었습니다.`;
+      }
+
+      if (successMessage) {
+        showModal(successMessage);
       } else {
-        alert('추천 제목 1번을 찾을 수 없습니다.');
+        showModal('추출할 수 있는 제목이나 나레이션 정보를 찾지 못했습니다.');
       }
     };
 
@@ -245,22 +276,28 @@
       if (el) {
         el.select();
         document.execCommand('copy');
-        alert('복사되었습니다.');
+        showModal('복사되었습니다.');
       }
     };
 
-    window.copyAllNarration = () => {
-      const withNames = document.getElementById('narration-with-names').value;
-      const noNames = document.getElementById('narration-no-names').value;
-      const combined = `[이름 있는 버전]\n${withNames}\n\n[이름 없는 버전]\n${noNames}`;
+    window.goToTypecast = () => {
+      const narrationText = document.getElementById('narration-with-names').value;
+      if (!narrationText) {
+        showModal('복사할 나레이션 내용이 없습니다.');
+        return;
+      }
 
-      const temp = document.createElement('textarea');
-      temp.value = combined;
-      document.body.appendChild(temp);
-      temp.select();
+      // Copy to clipboard
+      const tempArea = document.createElement('textarea');
+      tempArea.value = narrationText;
+      document.body.appendChild(tempArea);
+      tempArea.select();
       document.execCommand('copy');
-      document.body.removeChild(temp);
-      alert('모든 나레이션이 복사되었습니다.');
+      document.body.removeChild(tempArea);
+
+      showModal('나레이션이 복사되었습니다. 타입캐스트로 이동합니다.', () => {
+        window.open('https://typecast.ai/', '_blank');
+      });
     };
   </script>
 </body>
