@@ -6,7 +6,9 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     gemResultUrl: '',
     scriptContent: '',
     narrationWithNames: '',
-    narrationNoNames: ''
+    narrationNoNames: '',
+    mainImagePrompt: '',
+    commonPromptOptions: ''
   });
 
   useEffect(() => {
@@ -22,7 +24,9 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
       gemResultUrl: localStorage.getItem(`gem_result_url_${id}`) || '',
       scriptContent: localStorage.getItem(`gem_script_content_${id}`) || '',
       narrationWithNames: localStorage.getItem(`narration_with_names_${id}`) || '',
-      narrationNoNames: localStorage.getItem(`narration_no_names_${id}`) || ''
+      narrationNoNames: localStorage.getItem(`narration_no_names_${id}`) || '',
+      mainImagePrompt: localStorage.getItem(`main_image_prompt_${id}`) || '',
+      commonPromptOptions: localStorage.getItem(`common_prompt_options_${id}`) || ''
     });
   }, [id]);
 
@@ -36,6 +40,8 @@ export const useProjectDetails = (id, showModal, updateGlobalTask) => {
     else if (key === 'scriptContent') storageKey = 'gem_script_content';
     else if (key === 'narrationWithNames') storageKey = 'narration_with_names';
     else if (key === 'narrationNoNames') storageKey = 'narration_no_names';
+    else if (key === 'mainImagePrompt') storageKey = 'main_image_prompt';
+    else if (key === 'commonPromptOptions') storageKey = 'common_prompt_options';
 
     if (storageKey) {
       localStorage.setItem(`${storageKey}_${id}`, value);

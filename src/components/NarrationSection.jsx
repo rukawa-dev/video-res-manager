@@ -25,7 +25,6 @@ const NarrationSection = ({ withNames, noNames, onChange, showModal }) => {
         <div className="gems-icon"><Volume2 size={24} color="#a855f7" /></div>
         <div className="gems-title-group">
           <h2>Narration Content</h2>
-          <p>대본 구성에 맞춰 추출된 나레이션 데이터를 관리하세요.</p>
         </div>
         <div className="header-buttons">
           <button className="btn-pink" onClick={goToTypecast}>

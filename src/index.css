@@ -49,15 +49,25 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
+html,
 body {
   background-color: var(--bg-color);
-  color: var(--text-primary);
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  /* 추가 */
+}
+
+body {
+  color: var(--text-primary);
   display: flex;
   justify-content: center;
   align-items: flex-start;
   overflow-y: auto;
   font-size: 16px;
+  width: 100%;
+  /* 추가 */
 }
 
 #root {
@@ -153,6 +163,8 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding-bottom: 50dvh;
+  /* 메인 태그로 하단 패딩 이동 */
 }
 
 .item-info {
@@ -185,31 +197,51 @@ h1 {
 
 .gems-header {
   display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
 }
 
 .gems-icon {
-  background: rgba(45, 212, 191, 0.1);
-  border: 1px solid rgba(45, 212, 191, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
-  padding: 0.8rem;
+  padding: 0.6rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gems-icon svg {
+  filter: drop-shadow(0 0 5px currentColor);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.gems-header:hover .gems-icon {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.gems-header:hover .gems-icon svg {
+  opacity: 1;
+  filter: drop-shadow(0 0 10px currentColor);
 }
 
 .gems-title-group h2 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  background: none;
-  -webkit-text-fill-color: initial;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .gems-title-group p {
-  font-size: 1rem;
-  color: var(--text-secondary);
+  display: none;
+  /* 이미 제거됨 */
 }
 
 .selection-grid {
@@ -390,11 +422,14 @@ h1 {
 .narration-header {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
+}
+
+.narration-header .gems-title-group {
+  flex: 1;
 }
 
 .header-buttons {
-  margin-left: auto;
   display: flex;
   gap: 1rem;
 }
@@ -419,6 +454,40 @@ h1 {
   transform: translateY(-2px);
   box-shadow: 0 6px 25px rgba(236, 72, 153, 0.5);
   filter: brightness(1.1);
+}
+
+/* Recommendation Section */
+.recommendation-section {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.btn-large-gradient {
+  width: 100%;
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  color: white;
+  border: none;
+  padding: 1.5rem;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+}
+
+.btn-large-gradient:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-large-gradient:active {
+  transform: translateY(-1px);
 }
 
 .btn-outline {

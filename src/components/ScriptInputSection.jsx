@@ -7,7 +7,6 @@ const ScriptInputSection = ({ value, onChange, onAnalyze }) => {
         <div className="gems-icon"><FileText size={24} color="#3b82f6" /></div>
         <div className="gems-title-group">
           <h2>대본 입력</h2>
-          <p>영상 대본이나 원문 내용을 입력해 주세요.</p>
         </div>
       </div>
       <textarea

@@ -6,6 +6,9 @@ import GemsSection from '../components/GemsSection';
 import ResultInputSection from '../components/ResultInputSection';
 import ScriptInputSection from '../components/ScriptInputSection';
 import NarrationSection from '../components/NarrationSection';
+import RecommendationSection from '../components/RecommendationSection';
+import MainImageSection from '../components/MainImageSection';
+import CommonOptionsSection from '../components/CommonOptionsSection';
 
 const DetailPage = ({ showModal }) => {
   const { id } = useParams();
@@ -51,6 +54,27 @@ const DetailPage = ({ showModal }) => {
             onChange={saveDetail}
             showModal={showModal}
           />
+
+          <RecommendationSection narrationText={details.narrationWithNames} />
+
+          <CommonOptionsSection
+            value={details.commonPromptOptions}
+            onChange={saveDetail}
+          />
+
+          <MainImageSection
+            value={details.mainImagePrompt}
+            onChange={saveDetail}
+          />
+
+          {/* 빈 섹션 추가 */}
+          <section className="script-input-section" style={{ minHeight: '100px', borderStyle: 'dashed', opacity: 0.5 }}>
+            <div className="gems-header">
+              <div className="gems-title-group">
+                <h2 style={{ color: 'var(--text-secondary)' }}>새 섹션이 준비 중입니다...</h2>
+              </div>
+            </div>
+          </section>
         </main>
       </div>
     </div>

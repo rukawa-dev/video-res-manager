@@ -1,5 +1,5 @@
 import { Sparkles } from 'lucide-react';
-import gemsOptions from '../assets/gems-options.json';
+import gemsOptions from '../../⭐️ 옵션.json';
 
 const GemsSection = () => {
   return (
@@ -7,8 +7,7 @@ const GemsSection = () => {
       <div className="gems-header">
         <div className="gems-icon"><Sparkles size={24} color="#2dd4bf" /></div>
         <div className="gems-title-group">
-          <h2>GEMS Script Generation</h2>
-          <p>원하시는 랜드 테마를 선택하여 대본을 생성해보세요.</p>
+          <h2>나의 GEMS 리스트</h2>
         </div>
       </div>
       <div className="selection-grid">
