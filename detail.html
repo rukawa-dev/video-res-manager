@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상세 정보 - Video Resource Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="board-container">
+      <header class="board-header">
+        <h1 id="detail-title">상세 페이지</h1>
+        <button class="btn-primary" onclick="location.href='index.html'">목록으로</button>
+      </header>
+      <div class="gems-section">
+        <div class="gems-header">
+          <div class="gems-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+              </polygon>
+            </svg>
+          </div>
+          <div class="gems-title-group">
+            <h2>GEMS 대본 생성</h2>
+            <p>원하시는 랜드 테마를 선택하여 대본을 생성해보세요.</p>
+          </div>
+        </div>
+        <div class="selection-grid" id="gems-list">
+          <a href="https://gemini.google.com/gem/33d6fcf3520a" target="_blank" class="selection-card">
+            <span class="card-icon">🌈</span>
+            <span class="card-text">대화형 숏폼 대본 제작</span>
+          </a>
+          <a href="https://gemini.google.com/gem/83dd543730a4" target="_blank" class="selection-card">
+            <span class="card-icon">😊</span>
+            <span class="card-text">대화형 롱폼 대본 제작</span>
+          </a>
+        </div>
+      </div>
+      <div class="result-input-section">
+        <div class="result-label-group">
+          <div class="result-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a0a0a0" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <span class="result-label">생성된 GEM 결과</span>
+        </div>
+        <input type="text" id="result-url-input" placeholder="생성된 GEM 결과 URL을 입력하세요..." class="result-input">
+      </div>
+      <div class="glass-container" style="padding: 2rem; margin-top: 2rem; opacity: 0.5;">
+        <p id="detail-id"></p>
+        <p>기타 세부 설정 및 작업 내용이 여기에 표시됩니다.</p>
+      </div>
+    </div>
+  </div>
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const detailId = document.getElementById('detail-id');
+      const urlInput = document.getElementById('result-url-input');
+
+      if (id) {
+        if (detailId) detailId.textContent = `항목 ID: ${id}`;
+
+        // Load saved URL from localStorage
+        const storageKey = `gem_result_url_${id}`;
+        const savedUrl = localStorage.getItem(storageKey);
+        if (savedUrl && urlInput) {
+          urlInput.value = savedUrl;
+        }
+
+        // Save URL on input
+        if (urlInput) {
+          urlInput.addEventListener('input', (e) => {
+            localStorage.setItem(storageKey, e.target.value);
+          });
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
