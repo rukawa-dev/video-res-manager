@@ -69,7 +69,6 @@ const SceneImageSection = ({ details, onChange }) => {
             <input
               type="text"
               className="option-input"
-              style={{ fontFamily: "'D2Coding', monospace", fontSize: '0.95rem' }}
               value={prefix}
               onChange={(e) => handleUpdatePrefix(index, e.target.value)}
               placeholder="장면별 프리픽스를 입력하세요."
