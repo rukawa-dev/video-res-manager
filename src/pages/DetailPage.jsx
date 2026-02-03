@@ -24,20 +24,25 @@ const DetailPage = ({ showModal }) => {
   }
 
   return (
-    <div id="app">
-      <div className="board-container">
-        <header className="board-header">
-          <div style={{ minWidth: '120px', display: 'flex' }}>
-            <Link to="/" className="btn-outline" style={{ padding: '0.6rem 1rem' }}>
+    <div id="app" className="min-h-screen bg-midnight-bg text-white font-pretendard">
+      <div className="max-w-[1000px] mx-auto p-8 flex flex-col gap-8">
+        <header className="flex justify-between items-center gap-8 pt-4">
+          <div className="min-w-[120px]">
+            <Link
+              to="/"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-default border border-midnight-border text-midnight-text-secondary hover:text-white hover:border-midnight-accent/40 bg-white/5 transition-all"
+            >
               <ChevronLeft size={18} />
               목록으로
             </Link>
           </div>
-          <h1 id="current-post-title">{task.title}</h1>
-          <div style={{ minWidth: '120px' }}></div>
+          <h1 className="text-[2rem] font-bold text-white tracking-tight text-center flex-1 truncate">
+            {task.title}
+          </h1>
+          <div className="min-w-[120px]"></div>
         </header>
 
-        <main>
+        <main className="flex flex-col gap-8">
           <GemsSection />
 
           <ResultInputSection
@@ -100,16 +105,11 @@ const DetailPage = ({ showModal }) => {
           />
 
           {/* 하단 브랜드 이미지 */}
-          <div style={{ width: '100%' }}>
+          <div className="w-full mt-4 rounded-default overflow-hidden border border-midnight-border/30">
             <img
               src={`${import.meta.env.BASE_URL}soft-land-art.jpg`}
               alt="Soft Land Art"
-              style={{
-                width: '100%',
-                height: 'auto',
-                display: 'block',
-                opacity: 0.8
-              }}
+              className="w-full h-auto block opacity-80"
             />
           </div>
         </main>

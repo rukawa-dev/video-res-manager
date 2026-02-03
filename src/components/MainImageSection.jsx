@@ -30,24 +30,24 @@ const MainImageSection = ({ details, onChange }) => {
   };
 
   return (
-    <section className="script-input-section">
-      <div className="narration-header">
-        <div className="gems-icon" style={{ color: '#fbbf24' }}>
-          <Image size={24} color="currentColor" />
+    <section className="p-8 bg-midnight-card border border-midnight-border rounded-default shadow-lg">
+      <div className="flex justify-between items-center gap-8 mb-8 pb-4 border-b border-white/5">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-default bg-midnight-card border border-midnight-border flex items-center justify-center text-amber-400 shadow-sm">
+            <Image size={24} color="currentColor" />
+          </div>
+          <h2 className="text-[1.5rem] font-bold text-white m-0">대표 이미지 프롬프트 입력</h2>
         </div>
-        <div className="gems-title-group">
-          <h2>대표 이미지 프롬프트 입력</h2>
-        </div>
-        <div className="header-buttons">
-          <button className="btn-pink" onClick={goToGenspark} style={{ background: 'linear-gradient(135deg, #fb923c 0%, #f59e0b 100%)' }}>
-            <Image size={18} style={{ marginRight: '8px' }} />
-            젠스파크로 이동
-          </button>
-        </div>
+        <button
+          className="flex items-center px-6 py-3 rounded-default font-bold text-white transition-all bg-gradient-to-br from-orange-400 to-amber-500 shadow-[0_4px_15px_rgba(245,158,11,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+          onClick={goToGenspark}
+        >
+          <Image size={18} className="mr-2" />
+          젠스파크로 이동
+        </button>
       </div>
       <textarea
-        className="script-textarea"
-        style={{ minHeight: '300px' }}
+        className="w-full min-h-[300px] p-6 rounded-default bg-[#16182a]/60 border border-midnight-border text-[#e2e8f0] text-[1rem] leading-relaxed focus:outline-none focus:border-amber-500/50 focus:bg-[#1a1c32] transition-all placeholder:text-[#4b4d6a]"
         placeholder="대표 이미지에 사용할 프롬프트를 입력하세요."
         value={mainImagePrompt}
         onChange={(e) => onChange('mainImagePrompt', e.target.value)}
