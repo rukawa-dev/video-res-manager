@@ -85,28 +85,11 @@ const DetailPage = ({ showModal }) => {
             onChange={saveDetail}
           />
 
-          <section className="gems-section" style={{
-            padding: '2rem',
-            textAlign: 'center',
-            background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%)',
-            border: '1px solid rgba(168, 85, 247, 0.3)',
-            boxShadow: '0 0 20px rgba(168, 85, 247, 0.1) inset'
-          }}>
-            <p style={{
-              margin: 0,
-              fontSize: '1.4rem',
-              fontWeight: '800',
-              color: '#ffffff',
-              letterSpacing: '-0.02em',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '12px',
-              textShadow: '0 2px 4px rgba(0,0,0,0.3)'
-            }}>
-              <span style={{ fontSize: '1.8rem' }}>🎬</span>
+          <section className="gems-section p-8 text-center border-midnight-accent/30 bg-gradient-to-br from-midnight-accent/[0.15] to-pink-500/[0.15] border shadow-[inset_0_0_20px_rgba(168,85,247,0.1)]">
+            <p className="m-0 text-[1.4rem] font-extrabold text-white tracking-tight flex items-center justify-center gap-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+              <span className="text-[1.8rem]">🎬</span>
               Video Maker 를 열어 비디오를 생성하고, 업로드 준비로 돌아오세요!
-              <span style={{ fontSize: '1.8rem' }}>✨</span>
+              <span className="text-[1.8rem]">✨</span>
             </p>
           </section>
 

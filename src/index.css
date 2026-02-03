@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: 'Pretendard Variable';
   src: url('/pretendard/PretendardVariable.woff2') format('woff2-variations');
