@@ -14,15 +14,24 @@ import SceneImageSection from '../components/SceneImageSection';
 import IndividualSceneRegenerationSection from '../components/IndividualSceneRegenerationSection';
 import UploadReadySection from '../components/UploadReadySection';
 
+import { Trash2 } from 'lucide-react';
+
 const DetailPage = ({ showModal }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { updateTaskTitle } = useTasks();
+  const { updateTaskTitle, deleteTask } = useTasks();
   const { task, details, saveDetail, analyzeScript } = useProjectDetails(id, showModal, updateTaskTitle);
 
   if (!task) {
     return null;
   }
+
+  const handleDeleteTask = () => {
+    if (window.confirm('정말 이 작업을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.')) {
+      deleteTask(id);
+      navigate('/');
+    }
+  };
 
   return (
     <div id="app" className="min-h-screen bg-midnight-bg text-white font-pretendard">
@@ -40,7 +49,15 @@ const DetailPage = ({ showModal }) => {
           <h1 className="text-[2rem] font-bold text-white tracking-tight text-center flex-1 truncate">
             {task.title}
           </h1>
-          <div className="min-w-[120px]"></div>
+          <div className="min-w-[120px] flex justify-end">
+            <button
+              onClick={handleDeleteTask}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-default border border-red-500/30 text-red-400 bg-red-500/5 hover:bg-red-500/10 hover:border-red-500/50 transition-all active:scale-[0.98]"
+            >
+              <Trash2 size={18} />
+              이 작업 삭제
+            </button>
+          </div>
         </header>
 
         <main className="flex flex-col gap-8">

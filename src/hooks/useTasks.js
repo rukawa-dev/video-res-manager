@@ -30,9 +30,16 @@ export const useTasks = () => {
     localStorage.setItem('vrm_tasks', JSON.stringify(updatedTasks));
   };
 
+  const deleteTask = (taskId) => {
+    const updatedTasks = tasks.filter(task => task.id !== parseInt(taskId));
+    setTasks(updatedTasks);
+    localStorage.setItem('vrm_tasks', JSON.stringify(updatedTasks));
+  };
+
   return {
     tasks,
     createNewTask,
-    updateTaskTitle
+    updateTaskTitle,
+    deleteTask
   };
 };

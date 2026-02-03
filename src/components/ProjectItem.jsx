@@ -15,10 +15,6 @@ const ProjectItem = ({ task }) => {
             <span className="w-1.5 h-1.5 rounded-full bg-midnight-teal"></span>
             Created: {task.date}
           </span>
-          <span className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-            Status: {task.status}
-          </span>
         </div>
       </div>
       <div className="text-midnight-text-secondary group-hover:text-white group-hover:translate-x-1 transition-all">
