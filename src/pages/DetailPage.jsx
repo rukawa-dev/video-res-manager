@@ -11,6 +11,7 @@ import MainImageSection from '../components/MainImageSection';
 import OtherImageSection from '../components/OtherImageSection';
 import CommonOptionsSection from '../components/CommonOptionsSection';
 import SceneImageSection from '../components/SceneImageSection';
+import IndividualSceneRegenerationSection from '../components/IndividualSceneRegenerationSection';
 import UploadReadySection from '../components/UploadReadySection';
 
 const DetailPage = ({ showModal }) => {
@@ -83,6 +84,10 @@ const DetailPage = ({ showModal }) => {
           <SceneImageSection
             details={details}
             onChange={saveDetail}
+          />
+
+          <IndividualSceneRegenerationSection
+            details={details}
           />
 
           <OtherImageSection
