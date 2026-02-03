@@ -153,7 +153,9 @@ const UploadReadySection = ({ content, additionalDescription, onAdditionalDescri
                 onChange={(e) => onAdditionalDescriptionChange('additionalDescription', e.target.value)}
               />
 
-              <CopyableItem text={data.description} />
+              <CopyableItem
+                text={additionalDescription ? `${additionalDescription}\n\n${data.description}` : data.description}
+              />
             </div>
           )}
 
