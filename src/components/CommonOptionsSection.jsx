@@ -61,7 +61,7 @@ const CommonOptionsSection = ({ value, onChange }) => {
               type="text"
               className="w-full bg-[#16182a]/60 border border-white/5 rounded-md py-2.5 px-4 text-midnight-text-secondary text-[0.9rem] focus:outline-none cursor-default"
               readOnly
-              value={`이미지 비율은 ${value.imageRatio || '16:9'}.`}
+              value={value.imageRatio === '9:16' ? '이미지 크기는 1080x1920' : '이미지 크기는 1920x1080'}
             />
           </div>
         </div>

@@ -18,7 +18,7 @@ const MainImageSection = ({ details, onChange }) => {
       return;
     }
 
-    const ratioText = `이미지 비율은 ${imageRatio || '16:9'}.`;
+    const ratioText = imageRatio === '9:16' ? '이미지 크기는 1080x1920' : '이미지 크기는 1920x1080';
     const commonOptionsText = Array.isArray(commonPromptOptions)
       ? commonPromptOptions.filter(opt => opt.trim()).join('\n')
       : '';
