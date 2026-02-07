@@ -4,8 +4,13 @@ import { useState, useMemo } from 'react';
 const CopyableItem = ({ text, index }) => {
   const [copied, setCopied] = useState(false);
 
+  const cleanedText = useMemo(() => {
+    if (!text) return '';
+    return text.trim().replace(/^["'](.*)["']$/, '$1');
+  }, [text]);
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(cleanedText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -25,7 +30,7 @@ const CopyableItem = ({ text, index }) => {
           </span>
         )}
         <span className="text-[#e2e8f0] text-[1rem] leading-relaxed break-all whitespace-pre-wrap">
-          {text}
+          {cleanedText}
         </span>
       </div>
       <div
