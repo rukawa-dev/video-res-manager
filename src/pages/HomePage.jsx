@@ -1,9 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import { useTasks } from '../hooks/useTasks';
 import ProjectItem from '../components/ProjectItem';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const { tasks, createNewTask } = useTasks();
+
+  const handleCreateNewTask = () => {
+    const newId = createNewTask();
+    navigate(`/detail/${newId}`);
+  };
 
   return (
     <div id="app" className="min-h-screen bg-midnight-bg text-white font-pretendard">
@@ -14,7 +21,7 @@ const HomePage = () => {
           </h1>
           <button
             className="flex items-center gap-2 px-6 py-3 rounded-default font-bold text-white transition-all bg-gradient-to-br from-midnight-accent to-purple-600 shadow-[0_4px_20px_rgba(168,85,247,0.4)] hover:scale-[1.02] active:scale-[0.98] border border-white/10"
-            onClick={createNewTask}
+            onClick={handleCreateNewTask}
           >
             <Plus size={20} />
             새 작업 추가
